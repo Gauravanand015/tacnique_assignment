@@ -9,6 +9,12 @@ require("dotenv").config();
 // Route to register a new user
 userRouter.post("/register", async (req, res, next) => {
   let { name, email, password } = req.body;
+
+  if (!name && !email && !password) {
+    return next(
+      createHttpError.NotFound("Please provide name, email and password")
+    );
+  }
   if (!name || !email || !password) {
     return next(createHttpError.NotFound("Please enter all required fields"));
   }
