@@ -10,7 +10,7 @@ require("dotenv").config();
 app.use(express.json());
 
 // Test route to check if the server is running
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
   res.send("tacnique-assignment");
 });
 
