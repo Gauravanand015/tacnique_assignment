@@ -51,6 +51,13 @@ userRouter.post("/register", async (req, res, next) => {
 userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
 
+  if (!email && !password) {
+    return next(createHttpError.NotFound("Please provide email and password"));
+  }
+
+  if (!email || !password) {
+    return next(createHttpError.NotFound("Email or password is not provided"));
+  }
   try {
     // Find the user by email
     const user = await UserModel.findOne({ email: email });
