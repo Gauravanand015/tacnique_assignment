@@ -70,11 +70,11 @@ Log In a User
 
 - GET /tasks: Get all tasks.
   Response: List of tasks.
-  Create a New Task (Requires Authentication)
+  Create a New Task 
 
 #### Add Task
   
-- POST /tasks: Create a new task (requires authentication).
+- POST /tasks: Create a new task (Requires Authentication).
   Request Body:
   title (string): Task title.
   description (string): Task description.
