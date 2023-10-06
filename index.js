@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
-// const createHttpError = require("http-errors");
+const createHttpError = require("http-errors");
 const connection = require("./config/db");
 const { apiLimiter } = require("./middleware/rate-limit");
-// const taskRouter = require("./routes/tasks.route");
-// const { userRouter } = require("./routes/user.route");
+const taskRouter = require("./routes/tasks.route");
+const { userRouter } = require("./routes/user.route");
 require("dotenv").config();
 
 app.use(express.json());
@@ -15,24 +15,24 @@ app.get("/test", (req, res) => {
 });
 
 // User-related routes
-// app.use("/user", userRouter);
+app.use("/user", userRouter);
 
-// // Task-related routes
-// app.use("/", taskRouter);
+// Task-related routes
+app.use("/", taskRouter);
 
-// // Handle undefined routes
-// app.use(async (req, res, next) => {
-//   next(createHttpError.NotFound("This route does not exist"));
-// });
+// Handle undefined routes
+app.use(async (req, res, next) => {
+  next(createHttpError.NotFound("This route does not exist"));
+});
 
-// // Error handling middleware
-// app.use(async (err, req, res, next) => {
-//   res.status(err.status || 500);
-//   res.json({
-//     status: err.status || 500,
-//     message: err.message,
-//   });
-// });
+// Error handling middleware
+app.use(async (err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    status: err.status || 500,
+    message: err.message,
+  });
+});
 
 app.listen(process.env.PORT, async () => {
   try {
